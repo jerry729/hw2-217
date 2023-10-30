@@ -29,7 +29,7 @@ __global__ void naiveReduction(float *out, float *in, unsigned size)
 
     for (unsigned int stride = 1; stride <= blockDim.x; stride *= 2)
     {
-        __syncthreds();
+        __syncthreads();
         if (t % stride == 0)
         {
             partialSum[2*t] += partialSum[2*t+stride];
@@ -62,7 +62,7 @@ __global__ void optimizedReduction(float *out, float *in, unsigned size)
 
     for (unsigned int stride = blockDim.x; stride >= 1; stride /= 2)
     {
-        __syncthreds();
+        __syncthreads();
         if (t <= blockDim.x / 2)
         {
             partialSum[t] += partialSum[t+stride];
