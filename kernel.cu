@@ -63,7 +63,7 @@ __global__ void optimizedReduction(float *out, float *in, unsigned size)
     for (unsigned int stride = blockDim.x; stride >= 1; stride /= 2)
     {
         __syncthreads();
-        if (t <= blockDim.x / 2)
+        if (t < stride)
         {
             partialSum[t] += partialSum[t+stride];
         }
